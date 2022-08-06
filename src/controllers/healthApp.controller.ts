@@ -14,12 +14,6 @@ export const registerUser = async ( req: Request, res: Response) => {
 
         console.log(JSON.stringify(body))
         
-        // const userInfo = await Axios({
-        //   url: "https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN",
-        //   method: "POST",
-        //   data: JSON.stringify(body),
-        // });
-
         const options = {
           method: "POST",
           url: "https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN",
@@ -37,12 +31,6 @@ export const registerUser = async ( req: Request, res: Response) => {
           console.log(body);
           res.send(body)
         });
-
-        // const userInfo2 = await Axios.post("https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN", JSON.stringify(body))
-        console.log("I am here")
-        console.log("body: ",body);
-        // console.log(userInfo.data);
-        // return res.json(userInfo2.data);
     } catch (err: any) {
         console.error(err.message)
         if(err) return res.status(400).json({msg: err.message})
