@@ -35,6 +35,7 @@ export const registerUser = async ( req: Request, res: Response) => {
           if (error) throw new Error(error);
 
           console.log(body);
+          res.send(body)
         });
 
         // const userInfo2 = await Axios.post("https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN", JSON.stringify(body))
