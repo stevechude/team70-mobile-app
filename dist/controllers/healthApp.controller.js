@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = void 0;
-const axios_1 = __importDefault(require("axios"));
+const request_1 = __importDefault(require("request"));
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { searchParameter, verificationType } = req.body;
@@ -27,11 +27,26 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         //   method: "POST",
         //   data: JSON.stringify(body),
         // });
-        const userInfo2 = yield axios_1.default.post("https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN", JSON.stringify(body));
+        const options = {
+            method: "POST",
+            url: "https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN",
+            headers: {
+                ClientId: "272613b1bacd6c492459bbd717bbfbef",
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: body,
+        };
+        (0, request_1.default)(options, function (error, response, body) {
+            if (error)
+                throw new Error(error);
+            console.log(body);
+        });
+        // const userInfo2 = await Axios.post("https://rgw.k8s.apis.ng/centric-platforms/uat/customer/identity/NINValidationByNIN", JSON.stringify(body))
         console.log("I am here");
         console.log("body: ", body);
         // console.log(userInfo.data);
-        return res.json(userInfo2.data);
+        // return res.json(userInfo2.data);
     }
     catch (err) {
         console.error(err.message);
