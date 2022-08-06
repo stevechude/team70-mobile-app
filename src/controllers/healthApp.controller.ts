@@ -29,7 +29,7 @@ export const registerUser = async ( req: Request, res: Response) => {
           if (error) throw new Error(error);
 
           console.log(body);
-          res.send(body)
+          return res.send(body)
         });
     } catch (err: any) {
         console.error(err.message)

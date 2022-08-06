@@ -37,7 +37,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             if (error)
                 throw new Error(error);
             console.log(body);
-            res.send(body);
+            return res.send(body);
         });
     }
     catch (err) {
