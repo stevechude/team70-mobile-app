@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = void 0;
 const request_1 = __importDefault(require("request"));
+// import Axios from 'axios';
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { searchParameter, verificationType } = req.body;
@@ -30,7 +31,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 "Content-Type": "application/json",
                 Accept: "application/json",
             },
-            body: body,
+            body: { body },
         };
         (0, request_1.default)(options, function (error, response, body) {
             if (error)

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import request from "request";
-import Axios from 'axios';
+// import Axios from 'axios';
 
 
 export const registerUser = async ( req: Request, res: Response) => {
@@ -22,7 +22,7 @@ export const registerUser = async ( req: Request, res: Response) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: body,
+          body: {body},
         };
 
         request(options, function (error, response, body) {
