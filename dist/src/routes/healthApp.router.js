@@ -7,4 +7,6 @@ const express_1 = __importDefault(require("express"));
 const healthApp_controller_1 = require("../controllers/healthApp.controller");
 const router = express_1.default.Router();
 router.post('/user/register', healthApp_controller_1.registerUser);
+router.post("/user/signin", healthApp_controller_1.userSignin);
+router.post("/user/wallet", healthApp_controller_1.createEnairaWallet);
 exports.default = router;
