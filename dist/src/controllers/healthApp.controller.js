@@ -54,7 +54,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 birthdate: userInfo.data.response[0].birthdate,
             });
             yield newUser.save();
-            const origin = `http://localhost:3007`;
+            const origin = `https://team70-mobile-app.herokuapp.com/`;
             const loginUrl = `${origin}/api/user/signin`;
             const message = `<p>Your email has been successfully registered, please proceed to login. <a href="${loginUrl}">Login</a></p>`;
             yield (0, nodemailer_send_1.sendEmail)("maestro_health@yahoo.com", "Email confirmation", message);
