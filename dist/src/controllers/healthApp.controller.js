@@ -69,20 +69,27 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.registerUser = registerUser;
 const userSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        throw new Error("Please provide email and password");
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            throw new Error("Please provide email and password");
+        }
+        const user = yield userReg_schema_1.default.findOne({ email });
+        // console.log(email)
+        if (!user) {
+            //throw new Error("Login Failed");
+            res.status(404).send("Login Failed.");
+        }
+        const isPasswordCorrect = password === (user === null || user === void 0 ? void 0 : user.password);
+        if (!isPasswordCorrect)
+            res.send("Incorrect Password");
+        if (isPasswordCorrect && email === (user === null || user === void 0 ? void 0 : user.email)) {
+            res.send("Logged in successfully!");
+        }
     }
-    const user = yield userReg_schema_1.default.findOne({ email });
-    // console.log(email)
-    if (!user) {
-        throw new Error("Login Failed");
-    }
-    const isPasswordCorrect = (password === user.password);
-    if (!isPasswordCorrect)
-        res.send('Incorrect Password');
-    if (isPasswordCorrect && email === user.email) {
-        res.send("Logged in successfully!");
+    catch (error) {
+        if (error)
+            console.log(error);
     }
 });
 exports.userSignin = userSignin;

@@ -63,24 +63,30 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 export const userSignin = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    throw new Error("Please provide email and password");
+    if (!email || !password) {
+      throw new Error("Please provide email and password");
+    }
+
+    const user = await UserData.findOne({ email });
+    // console.log(email)
+
+    if (!user) {
+      //throw new Error("Login Failed");
+       res.status(404).send("Login Failed.")
+    }
+
+    const isPasswordCorrect = password === user?.password;
+    if (!isPasswordCorrect) res.send("Incorrect Password");
+    if (isPasswordCorrect && email === user?.email) {
+      res.send("Logged in successfully!");
+    }
+  } catch (error) {
+    if(error) console.log(error)
   }
-
-  const user = await UserData.findOne({ email });
-  // console.log(email)
-
-  if (!user) {
-    throw new Error("Login Failed");
-  }
-
-  const isPasswordCorrect = (password === user.password);
-  if(!isPasswordCorrect) res.send('Incorrect Password')
-  if (isPasswordCorrect && email === user.email) {
-    res.send("Logged in successfully!");
-  }
+  
 };
 
 export const createEnairaWallet = async (req: Request, res: Response) => {
