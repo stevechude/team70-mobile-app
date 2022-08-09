@@ -54,7 +54,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 birthdate: userInfo.data.response[0].birthdate,
             });
             yield newUser.save();
-            const origin = `https://team70-mobile-app.herokuapp.com/`;
+            const origin = `http://localhost:3007`;
             const loginUrl = `${origin}/api/user/signin`;
             const message = `<p>Your email has been successfully registered, please proceed to login. <a href="${loginUrl}">Login</a></p>`;
             yield (0, nodemailer_send_1.sendEmail)("maestro_health@yahoo.com", "Email confirmation", message);
@@ -89,7 +89,7 @@ exports.userSignin = userSignin;
 const createEnairaWallet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password, tier, accountNumber, address, NIN, phoneNumber } = req.body;
-        const userDetails = yield userReg_schema_1.default.findOne({ email });
+        // const userDetails = await UserData.findOne({email})
         // Function to reverse user's date of birth.
         function reverseDate(str) {
             const arr = str.split("-");
@@ -104,43 +104,41 @@ const createEnairaWallet = (req, res) => __awaiter(void 0, void 0, void 0, funct
             result.push(first, second);
             return result.join("");
         }
-        if (userDetails) {
-            const createWallet = yield (0, axios_1.default)({
-                method: "POST",
-                url: "https://rgw.k8s.apis.ng/centric-platforms/uat/enaira-user/CreateConsumerV2",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    ClientId: "272613b1bacd6c492459bbd717bbfbef",
-                },
-                data: {
-                    channelCode: "APISNG",
-                    uid: NIN,
-                    uidType: "NIN",
-                    reference: "NXG3547585HGTKJHGO",
-                    title: userDetails.title,
-                    firstName: userDetails.firstname,
-                    middleName: userDetails.middlename,
-                    lastName: userDetails.lastname,
-                    userName: userDetails.email,
-                    phone: phoneNumber,
-                    emailId: email,
-                    postalCode: userDetails.postal_code,
-                    city: userDetails.state_of_residence,
-                    address: address,
-                    countryOfResidence: changeCountryForm(userDetails.country),
-                    tier: tier,
-                    accountNumber: accountNumber,
-                    dateOfBirth: reverseDate(userDetails.birthdate),
-                    countryOfBirth: changeCountryForm(userDetails.country),
-                    password: password,
-                    remarks: "Passed",
-                    referralCode: "maestro_health",
-                },
-            });
-            console.log(createWallet.data);
-            res.json(createWallet.data);
-        }
+        const createWallet = yield (0, axios_1.default)({
+            method: "POST",
+            url: "https://rgw.k8s.apis.ng/centric-platforms/uat/enaira-user/CreateConsumerV2",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                ClientId: "272613b1bacd6c492459bbd717bbfbef",
+            },
+            data: {
+                channelCode: "APISNG",
+                uid: NIN,
+                uidType: "NIN",
+                reference: "NXG3547585HGTKJHGO",
+                title: "Mr",
+                firstName: "john",
+                middleName: "Bismark",
+                lastName: "Doe",
+                userName: "maestro_health@yahoo.com",
+                phone: phoneNumber,
+                emailId: email,
+                postalCode: null,
+                city: "Denmark",
+                address: address,
+                countryOfResidence: "NG",
+                tier: tier,
+                accountNumber: accountNumber,
+                dateOfBirth: "31/12/1987",
+                countryOfBirth: "NG",
+                password: password,
+                remarks: "Passed",
+                referralCode: "maestro_health",
+            },
+        });
+        console.log(createWallet.data);
+        res.json(createWallet.data);
     }
     catch (err) {
         console.error(err);

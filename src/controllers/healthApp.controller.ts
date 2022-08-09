@@ -46,7 +46,7 @@ export const registerUser = async (req: Request, res: Response) => {
       });
       await newUser.save();
 
-      const origin = `https://team70-mobile-app.herokuapp.com/`;
+      const origin = `http://localhost:3007`;
       
       const loginUrl = `${origin}/api/user/signin`;
       const message = `<p>Your email has been successfully registered, please proceed to login. <a href="${loginUrl}">Login</a></p>`;
@@ -95,7 +95,7 @@ export const createEnairaWallet = async (req: Request, res: Response) => {
       phoneNumber
     } = req.body;
 
-    const userDetails = await UserData.findOne({email})
+    // const userDetails = await UserData.findOne({email})
 
     // Function to reverse user's date of birth.
     function reverseDate(str: any) {
@@ -114,7 +114,7 @@ export const createEnairaWallet = async (req: Request, res: Response) => {
       return result.join("");
     }
 
-    if(userDetails) {
+  
       const createWallet = await Axios({
         method: "POST",
         url: "https://rgw.k8s.apis.ng/centric-platforms/uat/enaira-user/CreateConsumerV2",
@@ -128,21 +128,21 @@ export const createEnairaWallet = async (req: Request, res: Response) => {
           uid: NIN,
           uidType: "NIN",
           reference: "NXG3547585HGTKJHGO",
-          title: userDetails.title,
-          firstName: userDetails.firstname,
-          middleName: userDetails.middlename,
-          lastName: userDetails.lastname,
-          userName: userDetails.email,
+          title: "Mr",
+          firstName: "john",
+          middleName: "Bismark",
+          lastName: "Doe",
+          userName: "maestro_health@yahoo.com",
           phone: phoneNumber,
           emailId: email,
-          postalCode: userDetails.postal_code,
-          city: userDetails.state_of_residence,
+          postalCode: null,
+          city: "Denmark",
           address: address,
-          countryOfResidence: changeCountryForm(userDetails.country),
+          countryOfResidence: "NG",
           tier: tier,
           accountNumber: accountNumber,
-          dateOfBirth: reverseDate(userDetails.birthdate),
-          countryOfBirth: changeCountryForm(userDetails.country),
+          dateOfBirth: "31/12/1987",
+          countryOfBirth: "NG",
           password: password,
           remarks: "Passed",
           referralCode: "maestro_health",
@@ -150,7 +150,7 @@ export const createEnairaWallet = async (req: Request, res: Response) => {
       });
       console.log(createWallet.data);
       res.json(createWallet.data);
-    }
+    
 
   } catch (err: any) {
     console.error(err);
