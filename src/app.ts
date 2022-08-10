@@ -11,9 +11,14 @@ require("dotenv").config();
 
 const app = express();
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionSuccessStatus: 200
+}
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // ROUTES
 app.use('/api', healthAppRouter)

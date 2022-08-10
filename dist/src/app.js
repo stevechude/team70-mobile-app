@@ -11,9 +11,14 @@ const healthApp_router_1 = __importDefault(require("./routes/healthApp.router"))
 const database_1 = __importDefault(require("./db_config/database"));
 require("dotenv").config();
 const app = (0, express_1.default)();
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionSuccessStatus: 200
+};
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 // ROUTES
 app.use('/api', healthApp_router_1.default);
 const port = process.env.PORT || 3004;
