@@ -12,10 +12,10 @@ require("dotenv").config();
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://team70-mobile-app.herokuapp.com/",
   credentials: true,
-  optionSuccessStatus: 200
-}
+  optionSuccessStatus: 200,
+};
 app.use(logger("dev"));
 app.use(express.json());
 app.use(cors(corsOptions));
