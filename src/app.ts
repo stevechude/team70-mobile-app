@@ -11,14 +11,14 @@ require("dotenv").config();
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://team70-mobile-app.herokuapp.com/",
-  credentials: true,
-  optionSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: "https://team70-mobile-app.herokuapp.com/",
+//   credentials: true,
+//   optionSuccessStatus: 200,
+// };
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 // ROUTES
 app.use('/api', healthAppRouter)
